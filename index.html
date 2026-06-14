@@ -3204,7 +3204,7 @@
       task:    (v) => v.trim().length >= 5,
     };
 
-    form.addEventListener('submit', (e) => {
+   form.addEventListener('submit', async (e) => {
       e.preventDefault();
       let isValid = true;
 
@@ -3228,11 +3228,34 @@
 
       // В реальном проекте здесь — fetch на бэк / Telegram-бота / n8n-webhook
       // Сейчас — просто показываем сообщение об успехе
-      success.classList.add('is-shown');
-      form.reset();
+    try {
+  await fetch(
+    "https://n8n-production-3fb6.up.railway.app/webhook/4208f5b9-5628-4606-bed9-9fa9e85f139c",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: form.elements.name.value,
+        contact: form.elements.contact.value,
+        service: form.elements.service.value,
+        task: form.elements.task.value
+      })
+    }
+  );
 
-      setTimeout(() => success.classList.remove('is-shown'), 6000);
-    });
+  success.classList.add('is-shown');
+  form.reset();
+
+  setTimeout(() => {
+    success.classList.remove('is-shown');
+  }, 6000);
+
+} catch (error) {
+  console.error(error);
+  alert('Ошибка отправки формы');
+}
 
     // Снимаем ошибки при вводе
     form.querySelectorAll('input, textarea, select').forEach(input => {
