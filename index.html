@@ -3236,12 +3236,13 @@
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        name: form.elements.name.value,
-        contact: form.elements.contact.value,
-        service: form.elements.service.value,
-        task: form.elements.task.value
-      })
+     body: JSON.stringify({
+  name: form.elements.name.value,
+  contact: form.elements.contact.value,
+  service: form.elements.service.value,
+  task: form.elements.task.value,
+  budget: form.elements.budget.value
+})
     }
   );
 
